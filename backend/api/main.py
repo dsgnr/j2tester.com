@@ -45,3 +45,9 @@ cors_config = CORSConfig(allow_origins=["*"])  # Allow all origins
 
 # Create the Litestar app with CORS middleware
 app = Litestar([render_template], cors_config=cors_config)
+
+if __name__ == "__main__":
+    # Third Party
+    import uvicorn
+
+    uvicorn.run(app)
