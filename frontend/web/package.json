@@ -1,0 +1,43 @@
+{
+    "name": "j2tester.com",
+    "version": "0.0.1",
+    "description": "Single page site for ansible template tester",
+    "homepage": "https://github.com/dsgnr/j2tester.com#readme",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/dsgnr/j2tester.com.git"
+    },
+    "author": "dsgnr <email@danielhand.io>",
+    "license": "MIT",
+    "engines": {
+        "node": ">=23",
+        "npm": ">=10"
+    },
+    "bugs": {
+        "url": "https://github.com/dsgnr/j2tester.com/issues",
+        "email": "email@danielhand.io"
+    },
+    "scripts": {
+        "dev": "API_URL=${API_URL:-http://api:8000} NODE_ENV=development webpack serve --history-api-fallback",
+        "build": "NODE_ENV=production webpack build",
+        "lint": "npx eslint src",
+        "lint:fix": "npm run lint -- --fix",
+        "prettier": "npx prettier src --check",
+        "prettier:fix": "npm run prettier -- --write"
+    },
+    "devDependencies": {
+        "@eslint/js": "^9.21.0",
+        "copy-webpack-plugin": "^13.0.0",
+        "css-loader": "^7.1.2",
+        "css-minimizer-webpack-plugin": "^7.0.0",
+        "eslint": "^9.21.0",
+        "globals": "^16.0.0",
+        "html-webpack-plugin": "^5.6.0",
+        "mini-css-extract-plugin": "^2.9.0",
+        "prettier": "^3.4.2",
+        "uglifyjs-webpack-plugin": "^2.2.0",
+        "webpack": "^5.98.0",
+        "webpack-cli": "^5.1.4",
+        "webpack-dev-server": "^5.2.0"
+    }
+}
