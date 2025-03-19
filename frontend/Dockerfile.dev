@@ -1,0 +1,14 @@
+FROM node:23-alpine3.19
+ENV PATH=$PATH:$PWD/node_modules/.bin
+
+# ALlows the user to define a default port to populate the UI.
+# Pass a desired value in your docker run/compose environment
+ARG API_URL
+ENV API_URL=$API_URL
+
+COPY web/package.json web/yarn.lock ./
+RUN yarn install
+COPY ./web ./web
+WORKDIR /web
+EXPOSE 8080
+CMD ["yarn", "dev"]
