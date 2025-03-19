@@ -18,7 +18,7 @@ loader = DataLoader()
 inventory = InventoryManager(loader=loader, sources=[])
 variable_manager = VariableManager(loader=loader, inventory=inventory)
 
-@post("/render")
+@post("/api/render")
 async def render_template(data: TemplateRequest) -> dict:
     try:
         # Convert YAML/JSON string to a dictionary
