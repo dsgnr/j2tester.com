@@ -1,0 +1,31 @@
+---
+services:
+  web:
+    build:
+      context: frontend
+      dockerfile: Dockerfile.dev
+    container_name: web
+    environment:
+      - API_URL=  # Optional, the URL of the API service. The scheme and port is required. Defaults to http://api:8000 if not set.
+    ports:
+      - 8080:8080
+    volumes:
+      - ./frontend/web:/web
+    networks:
+      - ansible-tester
+
+  api:
+    build:
+      context: backend
+      dockerfile: Dockerfile.dev
+    container_name: api
+    ports:
+      - 8000:8000
+    volumes:
+      - ./backend/api:/src
+    networks:
+      - ansible-tester
+
+networks:
+  ansible-tester:
+    driver: bridge
