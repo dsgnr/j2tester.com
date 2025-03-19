@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     loadThemePreference();
     document.getElementById("toggleThemeBtn").addEventListener("click", toggleTheme);
+    document.getElementById("renderBtn").addEventListener("click", renderTemplate);
 });
 
 const elements = {
@@ -38,7 +39,7 @@ async function renderTemplate() {
     toggleVisibility(elements.loading, true);
 
     try {
-        const response = await fetch("http://127.0.0.1:8000/render", {
+        const response = await fetch("/api/render", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ template, variables })
