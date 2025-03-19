@@ -102,3 +102,9 @@ ENV/
 
 # local
 *.pex
+
+# project
+# Project
+.DS_Store
+node_modules
+
