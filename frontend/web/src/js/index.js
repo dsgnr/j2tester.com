@@ -1,8 +1,8 @@
-document.addEventListener("DOMContentLoaded", () => {
+window.onload = () => {
     loadThemePreference();
     document.getElementById("toggleThemeBtn").addEventListener("click", toggleTheme);
     document.getElementById("renderBtn").addEventListener("click", renderTemplate);
-});
+};
 
 const elements = {
     template: document.getElementById("template"),
@@ -10,28 +10,35 @@ const elements = {
     outputDiv: document.getElementById("output"),
     outputContainer: document.getElementById("output-container"),
     loading: document.getElementById("loading"),
-    errorAlert: document.getElementById("errorAlert")
+    errorAlert: document.getElementById("errorAlert"),
+    themeIcon: document.getElementById("themeIcon"),
+    html: document.documentElement
 };
 
-function toggleTheme() {
-    const html = document.documentElement;
-    const theme = html.getAttribute("data-bs-theme") === "dark" ? "light" : "dark";
-    html.setAttribute("data-bs-theme", theme);
-    document.getElementById("themeIcon").textContent = theme === "dark" ? "☀️" : "🌙";
-    localStorage.setItem("theme", theme);
-}
+const toggleVisibility = (element, show) => element.classList.toggle("d-none", !show);
 
-function loadThemePreference() {
+const toggleTheme = () => {
+    const isDark = elements.html.dataset.bsTheme === "dark";
+    elements.html.dataset.bsTheme = isDark ? "light" : "dark";
+    elements.themeIcon.textContent = isDark ? "🌙" : "☀️";
+    localStorage.setItem("theme", isDark ? "light" : "dark");
+};
+
+const loadThemePreference = () => {
     const theme = localStorage.getItem("theme") || "dark";
-    document.documentElement.setAttribute("data-bs-theme", theme);
-    document.getElementById("themeIcon").textContent = theme === "dark" ? "☀️" : "🌙";
-}
+    elements.html.dataset.bsTheme = theme;
+    elements.themeIcon.textContent = theme === "dark" ? "☀️" : "🌙";
+};
 
-async function renderTemplate() {
+const showError = (message) => {
+    elements.errorAlert.textContent = message;
+    toggleVisibility(elements.errorAlert, true);
+};
+
+const renderTemplate = async () => {
     const template = elements.template.value.trim();
     const variables = elements.variables.value.trim();
 
-    // Validate input
     if (!template) return showError("Template input cannot be empty.");
 
     toggleVisibility(elements.errorAlert, false);
@@ -59,14 +66,4 @@ async function renderTemplate() {
         toggleVisibility(elements.loading, false);
         showError("Failed to connect to API.");
     }
-}
-
-function showError(message) {
-    elements.errorAlert.textContent = message;
-    toggleVisibility(elements.errorAlert, true);
-}
-
-function toggleVisibility(element, show) {
-    element.classList.toggle("d-none", !show);
-}
-
+};
