@@ -32,7 +32,7 @@ module.exports = {
         port: 8080,
         proxy: [
             {
-                context: ["/api", "/docs", "/healthz"],
+                context: ["/api", "/docs", "/healthz", "/metrics"],
                 target: process.env.API_URL,
             },
         ],
