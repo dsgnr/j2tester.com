@@ -7,5 +7,5 @@ from ansible.vars.manager import VariableManager
 
 # Initialize Ansible components
 loader = DataLoader()
-inventory = InventoryManager(loader=loader, sources=[])
+inventory = InventoryManager(loader=loader, sources="localhost,")
 variable_manager = VariableManager(loader=loader, inventory=inventory)
