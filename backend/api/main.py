@@ -5,12 +5,13 @@ The j2tester.com app.
 import pathlib
 
 import tomli
-from app.routes.admin import health
-from app.routes.render import render_template
 from litestar import Litestar
 from litestar.config.cors import CORSConfig
 from litestar.openapi.config import OpenAPIConfig
 from litestar.openapi.plugins import ScalarRenderPlugin
+
+from app.routes.admin import health
+from app.routes.render import render_template
 
 
 def _get_project_meta():
