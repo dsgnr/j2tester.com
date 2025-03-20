@@ -1,0 +1,36 @@
+root {
+    --text-color: #f8f8f8;
+    --bs-alert-border-color: var(--success-color);
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    font-family:
+        Roboto Mono,
+        monospace;
+    color: var(--text-color);
+}
+
+a {
+    text-decoration: none;
+    color: var(--text-color);
+}
+
+form {
+    min-height: 450px;
+}
+
+footer {
+    position: absolute;
+    bottom: 5%;
+}
+
+footer svg {
+    width: 2rem;
+    height: 2rem;
+    color: var(--text-color);
+}

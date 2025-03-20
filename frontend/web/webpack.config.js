@@ -7,7 +7,7 @@ const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 module.exports = {
     entry: {
-        index: ["./src/js/index.js"],
+        index: ["./src/js/index.js", "./src/css/index.css"],
     },
     module: {
         rules: [
@@ -23,6 +23,9 @@ module.exports = {
             minify: {
                 collapseWhitespace: true,
             },
+        }),
+        new MiniCssExtractPlugin({
+            filename: "css/[name].min.css",
         }),
     ],
     devServer: {
