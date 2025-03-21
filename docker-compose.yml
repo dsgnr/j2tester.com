@@ -1,0 +1,36 @@
+---
+services:
+  web:
+    image: ghcr.io/dsgnr/j2tester-web:latest
+    container_name: web
+    environment:
+      - API_URL=  # Optional, the URL of the API service. The scheme and port is required. Defaults to http://api:8000 if not set.
+    ports:
+      - 8080:80
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-S", "http://localhost"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+    depends_on:
+      - api  # Ensure api service is ready before web starts
+    networks:
+      - j2tester
+  api:
+    image: ghcr.io/dsgnr/j2tester-api:latest
+    container_name: api
+    ports:
+      - 8000:8000
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-S", "http://localhost:8000/healthz"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+    networks:
+      - j2tester
+
+networks:
+  j2tester:
+    driver: bridge
