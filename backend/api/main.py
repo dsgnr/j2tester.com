@@ -28,6 +28,7 @@ project_meta = _get_project_meta()
 prometheus_config = PrometheusConfig(
     app_name="api",
     prefix=project_meta["name"].split(".")[0].replace(" ", "_"),
+    group_path=True,
     labels={
         "version": project_meta["version"],
     },
