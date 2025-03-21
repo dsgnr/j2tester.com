@@ -18,6 +18,10 @@ code#output {
     white-space: pre-line;
 }
 
+pre#rendered-output {
+    min-height: 200px;
+}
+
 form {
     min-height: 600px;
 }

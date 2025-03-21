@@ -72,6 +72,7 @@
                                 <div id="output-container" class="d-flex flex-column h-100">
                                     <label for="variables" class="form-label">Rendered output:</label>
                                     <pre
+                                        id="rendered-output"
                                         class="form-control bg-body-tertiary text-body rounded p-3 overflow-auto flex-grow-1 text-wrap"
                                     >
                                         <code id="output" class="language-yaml bg-transparent p-0"></code>
@@ -85,10 +86,10 @@
                     </form>
                 </div>
             </main>
-            <footer id="footer" class="col-lg-10 position-absolute">
+            <footer id="footer" class="col-lg-10 w-100">
                 <div class="container">
                     <div class="row g-3 mt-5 justify-content-sm-between justify-content-center">
-                        <div class="col-auto">
+                        <div class="col-md-4 text-sm-start text-center">
                             <script type="text/javascript">
                                 document.write(new Date().getFullYear());
                             </script>
@@ -96,7 +97,7 @@
                             <a href="https://danielhand.io" target="_blank" class="">Dan Hand (@dsgnr)</a>
                         </div>
 
-                        <div class="col-auto">
+                        <div class="col-md-auto text-sm-end text-center">
                             <a href="https://ko-fi.com/dsgnr" target="_blank">
                                 <img
                                     height="36"
