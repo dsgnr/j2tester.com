@@ -1,7 +1,7 @@
 {
     "name": "j2tester.com",
     "version": "0.0.1",
-    "description": "Single page site for ansible template tester",
+    "description": "Single page site for j2tester",
     "homepage": "https://github.com/dsgnr/j2tester.com#readme",
     "repository": {
         "type": "git",

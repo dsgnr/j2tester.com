@@ -12,7 +12,7 @@ services:
     volumes:
       - ./frontend/web:/web
     networks:
-      - ansible-tester
+      - j2tester
 
   api:
     build:
@@ -24,8 +24,8 @@ services:
     volumes:
       - ./backend/api:/src
     networks:
-      - ansible-tester
+      - j2tester
 
 networks:
-  ansible-tester:
+  j2tester:
     driver: bridge
