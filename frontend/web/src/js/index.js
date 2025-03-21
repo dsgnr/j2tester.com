@@ -5,14 +5,11 @@ const elements = {
     template: document.getElementById("template"),
     variables: document.getElementById("variables"),
     outputDiv: document.getElementById("output"),
-    outputContainer: document.getElementById("output-container"),
-    loading: document.getElementById("loading"),
     errorAlert: document.getElementById("errorAlert"),
-    themeIcon: document.getElementById("themeIcon"),
-    html: document.documentElement,
 };
 
 const toggleVisibility = (element, show) => element.classList.toggle("d-none", !show);
+const toggleDanger = (element, show) => element.classList.toggle("text-danger", show);
 
 const showError = (message) => {
     elements.errorAlert.textContent = message;
@@ -26,11 +23,13 @@ const renderTemplate = async (event) => {
     const template = elements.template.value.trim();
     const variables = elements.variables.value.trim();
 
-    if (!template) return showError("Template input cannot be empty.");
+    if (!template) {
+        toggleDanger(elements.outputDiv, true);
+        elements.outputDiv.textContent = "Template input cannot be empty.";
+        return;
+    }
 
     toggleVisibility(elements.errorAlert, false);
-    toggleVisibility(elements.outputContainer, false);
-    toggleVisibility(elements.loading, true);
 
     try {
         const response = await fetch("/api/render", {
@@ -40,17 +39,16 @@ const renderTemplate = async (event) => {
         });
 
         const result = await response.json();
-        toggleVisibility(elements.loading, false);
 
         if (!result.error && result.results) {
+            toggleDanger(elements.outputDiv, false);
             elements.outputDiv.textContent = result.results;
             hljs.highlightBlock(elements.outputDiv);
-            toggleVisibility(elements.outputContainer, true);
         } else {
-            showError(result.msg || "Unknown error occurred.");
+            toggleDanger(elements.outputDiv, true);
+            elements.outputDiv.textContent = result.msg || "Unknown error occurred";
         }
     } catch {
-        toggleVisibility(elements.loading, false);
-        showError("Failed to connect to API.");
+        showError("An unexpected error occurred.");
     }
 };

@@ -1,36 +1,32 @@
-root {
-    --text-color: #f8f8f8;
-    --bs-alert-border-color: var(--success-color);
-}
-
-html {
-    position: relative;
-    min-height: 100%;
-}
-
 body {
-    font-family:
-        Roboto Mono,
-        monospace;
+    font-family: "Roboto Mono", monospace;
     color: var(--text-color);
 }
 
 a {
-    text-decoration: none;
     color: var(--text-color);
+    text-decoration: none;
+}
+
+footer,
+textarea,
+code {
+    font-size: 0.9rem !important;
+}
+
+code#output {
+    white-space: pre-line;
 }
 
 form {
-    min-height: 450px;
+    min-height: 600px;
 }
 
 footer {
-    position: absolute;
     bottom: 5%;
 }
 
 footer svg {
     width: 2rem;
     height: 2rem;
-    color: var(--text-color);
 }

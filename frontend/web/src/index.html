@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>j2tester.com | Ansible Jinja2 Template Tester</title>
+        <title>j2tester.com | Ansible Jinja2 Template Tester, Parser and Renderer</title>
         <link rel="icon" type="image/png" href="./j2tester-logo.png" sizes="96x96" />
         <link rel="icon" type="image/svg+xml" href="./j2tester-logo.svg" />
         <link rel="shortcut icon" href="./favicon.ico" />
@@ -18,7 +18,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
         <link
             rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github-dark.min.css"
+            href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github-dark-dimmed.min.css"
         />
         <link href="css/index.min.css" rel="stylesheet" />
         <script src="js/index.min.js"></script>
@@ -43,51 +43,49 @@
                     <p class="fs-10 pt-5 fw-bold text-center">Render Jinja2 templates with YAML or JSON variables</p>
 
                     <form id="form" class="g-3 mt-5 justify-content-md-center needs-validation" novalidate>
-                        <div class="col-sm-10 mx-auto">
-                            <!-- Error Alert -->
+                        <div class="row justify-content-center" style="">
                             <div id="errorAlert" class="alert alert-danger d-none" role="alert"></div>
-                            <div class="row justify-content-center">
-                                <div class="col-sm-12 mb-4">
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-sm-6">
+                                <div class="mb-4">
                                     <label for="variables" class="form-label">Variables (YAML or JSON format):</label>
                                     <textarea
                                         id="variables"
-                                        class="form-control bg-body-tertiary text-body rounded"
-                                        rows="5"
+                                        class="form-control bg-body-tertiary text-body rounded language-yaml"
+                                        rows="8"
                                         placeholder="name: John"
                                     ></textarea>
                                 </div>
-                                <div class="col-sm-12 mb-4">
+                                <div class="mb-4">
                                     <label for="template" class="form-label">Ansible Template (Jinja2):</label>
                                     <textarea
                                         id="template"
-                                        class="form-control bg-body-tertiary text-body rounded"
-                                        rows="5"
+                                        class="form-control bg-body-tertiary text-body rounded language-yaml"
+                                        rows="8"
                                         required
                                         placeholder="Hello, {{ name }}!"
                                     ></textarea>
                                 </div>
-                                <div class="col-sm-auto mb-4">
-                                    <button type="button" id="renderBtn" class="btn btn-primary w-100">
-                                        Render Template
-                                    </button>
+                            </div>
+                            <div class="col-sm-6">
+                                <div id="output-container" class="d-flex flex-column h-100">
+                                    <label for="variables" class="form-label">Rendered output:</label>
+                                    <pre
+                                        class="form-control bg-body-tertiary text-body rounded p-3 overflow-auto flex-grow-1 text-wrap"
+                                    >
+                                        <code id="output" class="language-yaml bg-transparent p-0"></code>
+                                    </pre>
                                 </div>
                             </div>
-                            <!-- Loading Indicator -->
-                            <div id="loading" class="text-center mt-3 d-none">
-                                <div class="spinner-border text-primary"></div>
-                                <p>Rendering...</p>
-                            </div>
-                            <div id="output-container" class="mt-4 d-none">
-                                <h4>Rendered Output:</h4>
-                                <pre
-                                    class="bg-body-tertiary text-body rounded p-3 overflow-auto"
-                                ><code id="output" class="language-yaml"></code></pre>
-                            </div>
+                        </div>
+                        <div class="col-sm-4 mt-4 mx-auto">
+                            <button type="button" id="renderBtn" class="btn btn-success w-100">Render Template</button>
                         </div>
                     </form>
                 </div>
             </main>
-            <footer id="footer" class="col-lg-10">
+            <footer id="footer" class="col-lg-10 position-absolute">
                 <div class="container">
                     <div class="row g-3 mt-5 justify-content-sm-between justify-content-center">
                         <div class="col-auto">
@@ -106,11 +104,7 @@
                                     alt="Buy Me a Coffee at ko-fi.com"
                                 />
                             </a>
-                            <a
-                                href="https://github.com/dsgnr/j2tester.com"
-                                rel="noopener noreferrer"
-                                target="_blank"
-                            >
+                            <a href="https://github.com/dsgnr/j2tester.com" rel="noopener noreferrer" target="_blank">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 24 24"
