@@ -1,6 +1,7 @@
 window.onload = () => {
-    document.getElementById("renderBtn").addEventListener("click", renderTemplate);
+    document.getElementById("renderBtn").addEventListener("click", (event) => renderTemplate(event));
 };
+
 const elements = {
     template: document.getElementById("template"),
     variables: document.getElementById("variables"),
