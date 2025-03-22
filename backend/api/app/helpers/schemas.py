@@ -11,7 +11,7 @@ class TemplateRequest(BaseModel):
     """The schema used for the render template endpoint."""
 
     template: str
-    variables: Optional[str] = Field(default="")  # Can be empty, YAML, or JSON string
+    variables: Optional[dict] = Field(default={})  # Can be empty, YAML, or JSON string
 
 
 class APIResponseSchema(BaseModel):

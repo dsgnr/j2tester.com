@@ -1,5 +1,5 @@
 """
-The j2tester.com app. 
+The j2tester.com app.
 """
 
 import pathlib

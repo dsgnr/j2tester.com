@@ -17,6 +17,16 @@ const showError = (message) => {
     toggleVisibility(elements.errorAlert, true);
 };
 
+function yamlToJson(yamlString) {
+    try {
+        const jsonObject = jsyaml.load(yamlString);
+        return JSON.stringify(jsonObject, null, 2); // Returns formatted JSON string
+    } catch (e) {
+        console.error("Error parsing YAML:", e);
+        return null;
+    }
+}
+
 const renderTemplate = async (event) => {
     event.preventDefault();
     event.stopPropagation();
@@ -33,10 +43,11 @@ const renderTemplate = async (event) => {
     toggleVisibility(elements.errorAlert, false);
 
     try {
+        console.log(variables);
         const response = await fetch("/api/render", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ template, variables }),
+            body: JSON.stringify({ template: template, variables: JSON.parse(yamlToJson(variables)) }),
         });
 
         const result = await response.json();

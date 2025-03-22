@@ -32,10 +32,11 @@ def render_template(
     """
 
     try:
-        # Convert YAML/JSON string to a dictionary
+        # Convert JSON string to YAML
+        variables_dict = {}
         if data.variables:  # Only parse if not empty
             try:
-                variables_dict = yaml.safe_load(data.variables.strip())
+                variables_dict = yaml.safe_load(yaml.dump(data.variables))
                 if not isinstance(variables_dict, dict):
                     raise ValueError("Variables must be a dictionary.")
             except yaml.YAMLError as e:
@@ -46,8 +47,6 @@ def render_template(
                 return APIResponseSchema(
                     error=True, msg=f"Error parsing variables: {str(e)}"
                 )
-        else:
-            variables_dict = {}  # Default to empty dict
 
         # Use Ansible templating
         try:
@@ -58,7 +57,9 @@ def render_template(
                 error=True, msg=f"An error occurred during template rendering: {str(e)}"
             )
 
-        return APIResponseSchema(error=False, msg="success", results=rendered_output)
+        return APIResponseSchema(
+            error=False, msg="success", results=str(rendered_output)
+        )
 
     except (ValueError, yaml.YAMLError, AnsibleError) as e:
         # Catching specific exceptions related to the YAML parsing, templating, or value errors
