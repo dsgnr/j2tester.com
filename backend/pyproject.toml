@@ -2,7 +2,7 @@
 package-mode = false
 name = "j2tester.com"
 version = "0.0.1"
-description = "Utility for testing Ansible templates"
+description = "Utility for testing, parsing and rendering Ansible or Jinja2 templates"
 authors = ["dsgnr <email@danielhand.io>"]
 repository = "https://github.com/dsgnr/j2tester.com"
 license = "GNU General Public License v3.0"
