@@ -1,6 +1,6 @@
 <h1 align="center">j2tester.com</h1>
 
-Inspired by [sivel/ansible-template-ui](https://github.com/sivel/ansible-template-ui), this repository creates a simple web UI and REST API for testing Ansible templates.
+Inspired by [sivel/ansible-template-ui](https://github.com/sivel/ansible-template-ui), this repository creates a simple web UI and REST API for testing, parsing and rendering Ansible or Jinja2 templates.
 
 Offers minimal requirements, without spinning up containers and executing Ansible.
 
