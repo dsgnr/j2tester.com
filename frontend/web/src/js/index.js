@@ -1,3 +1,4 @@
+/* global jsyaml, hljs */
 window.onload = () => {
     document.getElementById("renderBtn").addEventListener("click", (event) => renderTemplate(event));
 };
