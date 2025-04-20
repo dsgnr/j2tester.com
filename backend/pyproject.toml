@@ -13,7 +13,7 @@ python = "^3.12"
 litestar = {extras = ["prometheus"], version = "^2.15.2"}
 gunicorn = "23.0.0"
 pydantic = "^2.10.6"
-uvicorn = {extras = ["standard"], version = "^0.34.0"}
+uvicorn = {extras = ["standard"], version = "^0.34.2"}
 ansible-core = "^2.18.3"
 tomli = "^2.2.1"
 
