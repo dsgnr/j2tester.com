@@ -1,7 +1,7 @@
 [tool.poetry]
 package-mode = false
 name = "j2tester.com"
-version = "0.0.1"
+version = "0.0.2"
 description = "Utility for testing, parsing and rendering Ansible or Jinja2 templates"
 authors = ["dsgnr <email@danielhand.io>"]
 repository = "https://github.com/dsgnr/j2tester.com"
