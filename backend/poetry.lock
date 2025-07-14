@@ -14,14 +14,14 @@ files = [
 
 [[package]]
 name = "ansible-core"
-version = "2.18.3"
+version = "2.18.6"
 description = "Radically simple IT automation"
 optional = false
 python-versions = ">=3.11"
 groups = ["main"]
 files = [
-    {file = "ansible_core-2.18.3-py3-none-any.whl", hash = "sha256:4d5120916b6d36881185c0c7231cdb7b1675f7dddd1a7a833a7d67d56bcdfcc8"},
-    {file = "ansible_core-2.18.3.tar.gz", hash = "sha256:8c4eaca40845238e2601b9bc9dbfbd4f6ed3502cb8b2632789f75ce478abfdee"},
+    {file = "ansible_core-2.18.6-py3-none-any.whl", hash = "sha256:12a34749a7b20f0f1536bd3e3b2e137341867e4642e351273e96647161f595c0"},
+    {file = "ansible_core-2.18.6.tar.gz", hash = "sha256:25bb20ce1516a1b7307831b263cef684043b3720711466bd9d4164e5fd576557"},
 ]
 
 [package.dependencies]
@@ -1552,4 +1552,4 @@ files = [
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.12"
-content-hash = "7819ac3cd6a1e243ea42311029f5897e759b817b46d9495679ec52448be9bf59"
+content-hash = "d409c08baa507b7b92bc0d83503c87efeb38370309c0714f197e9f3c628a045f"
