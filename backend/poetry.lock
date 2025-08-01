@@ -14,22 +14,22 @@ files = [
 
 [[package]]
 name = "ansible-core"
-version = "2.18.6"
+version = "2.19.0"
 description = "Radically simple IT automation"
 optional = false
 python-versions = ">=3.11"
 groups = ["main"]
 files = [
-    {file = "ansible_core-2.18.6-py3-none-any.whl", hash = "sha256:12a34749a7b20f0f1536bd3e3b2e137341867e4642e351273e96647161f595c0"},
-    {file = "ansible_core-2.18.6.tar.gz", hash = "sha256:25bb20ce1516a1b7307831b263cef684043b3720711466bd9d4164e5fd576557"},
+    {file = "ansible_core-2.19.0-py3-none-any.whl", hash = "sha256:5914f1539f5da190bd9591112e20e339d699bda0c546992fc77c1e3ccc3928f2"},
+    {file = "ansible_core-2.19.0.tar.gz", hash = "sha256:ca4730837fdd50c8f8ab2fa17c04c448d74c5a27f3d5be7e602d9e3feb9430bc"},
 ]
 
 [package.dependencies]
 cryptography = "*"
-jinja2 = ">=3.0.0"
+jinja2 = ">=3.1.0"
 packaging = "*"
 PyYAML = ">=5.1"
-resolvelib = ">=0.5.3,<1.1.0"
+resolvelib = ">=0.5.3,<2.0.0"
 
 [[package]]
 name = "anyio"
@@ -1552,4 +1552,4 @@ files = [
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.12"
-content-hash = "9db51f29c4a0e31cf1fe15f7c61471c5b7ce390c42cccd39458fed39643bc439"
+content-hash = "d17e783cbaaa420995e8f2c8c25de8b584e9bff1185e5362b956b550fa2a53b1"
