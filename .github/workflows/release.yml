@@ -1,0 +1,64 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Next version (e.g., 1.2.3)'
+        required: true
+
+jobs:
+  release:
+    name: Release ${{ github.event.inputs.version }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Needed to get all tags
+
+      - name: Set up Python and Node
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Get latest tag
+        id: get_last_tag
+        run: |
+          echo "last_tag=$(git describe --tags --abbrev=0)" >> $GITHUB_OUTPUT
+
+      - name: Generate changelog
+        id: changelog
+        run: |
+          echo "## Changelog for v${{ github.event.inputs.version }}" > temp_changelog.md
+          echo "" >> temp_changelog.md
+          git log ${{ steps.get_last_tag.outputs.last_tag }}..HEAD --merges --pretty=format:'- %s ([#%h](https://github.com/${{ github.repository }}/pull/%h))' >> temp_changelog.md
+          echo "" >> temp_changelog.md
+          cat temp_changelog.md
+          cat temp_changelog.md >> CHANGELOG.md
+
+      - name: Bump version in pyproject.toml
+        run: |
+          sed -i "s/^version = \".*\"/version = \"${{ github.event.inputs.version }}\"/" backend/pyproject.toml
+
+      - name: Bump version in package.json
+        run: |
+          jq ".version = \"${{ github.event.inputs.version }}\"" frontend/web/package.json > tmp.$$.json && mv tmp.$$.json frontend/web/package.json
+
+      - name: Commit and push changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore(release): v${{ github.event.inputs.version }}"
+          tagging_message: "v${{ github.event.inputs.version }}"
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ github.event.inputs.version }}
+          name: v${{ github.event.inputs.version }}
+          body_path: temp_changelog.md
+
