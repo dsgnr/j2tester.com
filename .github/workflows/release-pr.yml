@@ -1,0 +1,66 @@
+name: Create Release PR
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Next version (e.g., 1.2.3)'
+        required: true
+
+jobs:
+  create-release-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python and Node
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Get latest tag
+        id: last_tag
+        run: |
+          echo "tag=$(git describe --tags --abbrev=0)" >> $GITHUB_OUTPUT
+
+      - name: Create changelog
+        id: changelog
+        run: |
+          echo "## Changelog for v${{ github.event.inputs.version }}" > changelog.md
+          echo "" >> changelog.md
+          git log ${{ steps.last_tag.outputs.tag }}..HEAD --merges --pretty=format:'- %s ([commit](https://github.com/${{ github.repository }}/commit/%H))' >> changelog.md
+          echo "" >> changelog.md
+          cat changelog.md >> CHANGELOG.md
+
+      - name: Update versions
+        run: |
+          sed -i "s/^version = \".*\"/version = \"${{ github.event.inputs.version }}\"/" backend/pyproject.toml
+          jq ".version = \"${{ github.event.inputs.version }}\"" frontend/web/package.json > tmp && mv tmp frontend/web/package.json
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git checkout -b release/v${{ github.event.inputs.version }}
+          git add CHANGELOG.md backend/pyproject.toml frontend/web/package.json
+          git commit -m "chore(release): prepare v${{ github.event.inputs.version }}"
+          git push origin release/v${{ github.event.inputs.version }}
+
+      - name: Create PR
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: release/v${{ github.event.inputs.version }}
+          title: "Release v${{ github.event.inputs.version }}"
+          body: |
+            ## What's Changed
+
+            See the CHANGELOG.md for details.
+          base: main
+

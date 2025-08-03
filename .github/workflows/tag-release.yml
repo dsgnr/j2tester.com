@@ -1,0 +1,55 @@
+name: Tag & Release on Merge
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  tag-and-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check if this is a release commit
+        id: check
+        run: |
+          if [[ "${{ github.event.head_commit.message }}" =~ ^chore\(release\):\ prepare\ v([0-9]+\.[0-9]+\.[0-9]+) ]]; then
+            version="${BASH_REMATCH[1]}"
+            echo "Detected version: $version"
+            echo "release_version=$version" >> $GITHUB_OUTPUT
+          else
+            echo "Not a release commit."
+            echo "release_version=" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Stop if not a release commit
+        if: steps.check.outputs.release_version == ''
+        run: echo "Not a release commit, skipping."
+
+      - name: Checkout code
+        if: steps.check.outputs.release_version != ''
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Create Tag
+        if: steps.check.outputs.release_version != ''
+        run: |
+          git tag v${{ steps.check.outputs.release_version }}
+          git push origin v${{ steps.check.outputs.release_version }}
+
+      - name: Generate release body
+        if: steps.check.outputs.release_version != ''
+        run: |
+          awk "/^## Changelog for v${{ steps.check.outputs.release_version }}/ {print_flag=1; next}
+               /^## / {print_flag=0}
+               print_flag {print}" CHANGELOG.md > release_body.md
+
+      - name: Create GitHub Release
+        if: steps.check.outputs.release_version != ''
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.check.outputs.release_version }}
+          name: v${{ steps.check.outputs.release_version }}
+          body_path: release_body.md
+
